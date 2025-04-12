@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Results</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      .navbar-brand {
+        color: red !important;
+        font-weight: bold;
+      }
+    
+      .search-inp {
+        font-size: 1.1rem;
+        flex-grow: 2;
+        min-width: 300px;
+        border-radius: 50px;
+      }
+    
+      .search-btn {
+        font-size: 1.1rem;
+        background-color: #ff4d4d;
+        color: white;
+        border-radius: 50px;
+        border: none;
+        transition: background-color 0.3s;
+      }
+    
+      .search-btn:hover {
+        background-color: #e04343;
+      }
+    </style>
+    
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/listings">Airbnb</a>
+    <form class="d-flex mx-auto" role="search" action="/search" method="GET" style="max-width: 600px; width: 100%;">
+      <input 
+        class="form-control me-2 search-inp" 
+        type="search" 
+        placeholder="Search listings..." 
+        name="q" 
+        value="<%= query %>" 
+        aria-label="Search"
+        style="border-radius: 50px; padding: 0.6rem 1.2rem;"
+      >
+      <button 
+        class="btn search-btn" 
+        type="submit"
+        style="background-color: #ff4d4d; color: white; border-radius: 50px; padding: 0.6rem 1.2rem; border: none;"
+      >
+        <i class="fa-solid fa-magnifying-glass"></i> Search
+      </button>
+    </form>
+    
+  </div>
+</nav>
+
+<div class="container mt-4">
+  <button class="btn btn-danger mb-3" onclick="history.back()">
+    &larr; Back
+  </button>
+
+  <h2>Search Results for "<%= query %>"</h2>
+
+
+  <% if (results.length === 0) { %>
+    <p>No listings found.</p>
+  <% } else { %>
+    <div class="row">
+      <% results.forEach(listing => { %>
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <img src="<%= listing.image.url %>" class="card-img-top" alt="<%= listing.title %>">
+            <div class="card-body">
+              <h5 class="card-title"><%= listing.title %></h5>
+              <p class="card-text"><%= listing.description.substring(0, 100) %>...</p>
+              <a href="/listings/<%= listing._id %>" class="btn btn-primary">View</a>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+</div>
+
+</body>
+</html>
