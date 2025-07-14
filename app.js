@@ -17,6 +17,8 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
+const cartRouter = require('./routes/cart');  // if named that
+const bookingRouter = require('./routes/booking');
 
 const dbUrl = process.env.ATLASDB_URL;
 
@@ -110,7 +112,9 @@ app.get('/search', async (req, res) => {
 
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
-app.use("/", userRouter)
+app.use("/", userRouter);
+app.use("/", cartRouter);
+app.use("/", bookingRouter);
 
 
 app.all("*", (req,res,next) => {

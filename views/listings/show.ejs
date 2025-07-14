@@ -17,6 +17,10 @@
       <p class="card-text"><%= listing.country %></p>
     </div>
   </div>
+ <form action="/book/<%= listing._id %>" method="POST">
+    <button class="btn btn-success">Book This Room</button>
+</form>
+
 </div>
 
 <br />
