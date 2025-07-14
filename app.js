@@ -106,10 +106,12 @@ app.all("*", (req, res, next) => {
     next(new ExpressError(404, "Page Not Found!"));
 });
 
-// Error handler
+// ✅ Updated Error Handler
 app.use((err, req, res, next) => {
-    console.error("💥 ERROR:", err.stack);
-    res.status(500).send(`<h1>ERROR</h1><pre>${err.stack}</pre>`);
+    console.error("💥 ERROR STACK:", err?.stack || err);
+    const status = err.statusCode || 500;
+    const message = err.message || "Something Went Wrong!";
+    res.status(status).send(`<h1>ERROR</h1><pre>${message}</pre>`);
 });
 
 // Start server
