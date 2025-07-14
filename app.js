@@ -83,36 +83,36 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get("/search", async (req, res) => {
-    const query = req.query.q;
-    const Listing = require("./models/listing");
-    let results = [];
-
-    if (query) {
-        results = await Listing.find({
-            title: { $regex: query, $options: "i" }
-        });
-    }
-
-    res.render("searchResults", { results, query });
+// 🔍 Log every request
+app.use((req, res, next) => {
+    console.log("🔍 Incoming Request:", req.method, req.path);
+    next();
 });
 
+// Routes
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
 app.use("/", cartRouter);
 app.use("/", bookingRouter);
 
+// Redirect home to listings
+app.get("/", (req, res) => {
+    res.redirect("/listings");
+});
+
+// Catch-all route for 404
 app.all("*", (req, res, next) => {
     next(new ExpressError(404, "Page Not Found!"));
 });
 
+// Error handler
 app.use((err, req, res, next) => {
     console.error("💥 ERROR:", err.stack);
     res.status(500).send(`<h1>ERROR</h1><pre>${err.stack}</pre>`);
 });
 
-
+// Start server
 app.listen(8080, () => {
     console.log("Server is listening");
 });
