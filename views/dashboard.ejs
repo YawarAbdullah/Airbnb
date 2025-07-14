@@ -1,17 +1,24 @@
-<h2>Your Booked Rooms</h2>
+
 
 <% if (bookings.length === 0) { %>
   <p>You haven't booked any rooms yet.</p>
 <% } else { %>
-  <ul>
-    <% bookings.forEach(booking => { %>
-    <li>
-  <strong><%= booking.listing?.title || "Unknown Room" %></strong><br>
-  Check-in: <%= booking.checkIn ? booking.checkIn.toDateString() : "N/A" %><br>
-  Check-out: <%= booking.checkOut ? booking.checkOut.toDateString() : "N/A" %><br>
-  Adults: <%= booking.adults || 0 %>, Children: <%= booking.children || 0 %>
-</li>
+ <ul class="list-group">
+  <% bookings.forEach(booking => { %>
+    <li class="list-group-item mb-3">
+      <h5><%= booking.listing.title %></h5>
+      <p>
+        Check-in: <%= booking.checkIn ? booking.checkIn.toDateString() : "N/A" %><br>
+        Check-out: <%= booking.checkOut ? booking.checkOut.toDateString() : "N/A" %><br>
+        Adults: <%= booking.adults %>, Children: <%= booking.children %>
+      </p>
 
-    <% }) %>
-  </ul>
+      <!-- Delete Booking Button -->
+      <form action="/book/<%= booking._id %>?_method=DELETE" method="POST">
+        <button class="btn btn-sm btn-outline-danger">Cancel Booking</button>
+      </form>
+    </li>
+  <% }) %>
+</ul>
+
 <% } %>

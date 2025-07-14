@@ -19,5 +19,10 @@ router.post("/book/:id", isLoggedIn, async (req, res) => {
     req.flash("success", "Room booked successfully!");
     res.redirect("/dashboard");
 });
+router.delete("/book/:id", isLoggedIn, async (req, res) => {
+  await Booking.findByIdAndDelete(req.params.id);
+  req.flash("success", "Booking cancelled.");
+  res.redirect("/dashboard");
+});
 
 module.exports = router;
