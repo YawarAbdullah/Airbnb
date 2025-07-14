@@ -18,8 +18,25 @@
     </div>
   </div>
  <form action="/book/<%= listing._id %>" method="POST">
-    <button class="btn btn-success">Book This Room</button>
+  <div>
+    <label>Check-In:</label>
+    <input type="date" name="checkIn" required>
+  </div>
+  <div>
+    <label>Check-Out:</label>
+    <input type="date" name="checkOut" required>
+  </div>
+  <div>
+    <label>Adults:</label>
+    <input type="number" name="adults" min="1" required>
+  </div>
+  <div>
+    <label>Children:</label>
+    <input type="number" name="children" min="0" required>
+  </div>
+  <button type="submit" class="btn btn-success">Book This Room</button>
 </form>
+
 
 </div>
 
