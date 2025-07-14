@@ -1,67 +1,96 @@
 <% layout("/layouts/boilerplate") %>
-
 <div class="row mt-3">
-  <div class="col-8 offset-2">
+    <div class="col-8 offset-2">
+        <br>
     <h3>Create A New Listing:</h3>
-    <form method="POST" action="/listings" enctype="multipart/form-data" class="needs-validation" novalidate>
-      
-      <div class="mb-3">
-        <label for="title" class="form-label">Title</label>
-        <input name="listing[title]" placeholder="Add a catchy title" type="text" class="form-control" required>
-        <div class="valid-feedback">Title looks good!</div>
-      </div>
-
-      <div class="mb-3">
-        <label for="description" class="form-label">Description</label>
-        <textarea name="listing[description]" class="form-control" required></textarea>
-        <div class="invalid-feedback">Please enter a short description</div>
-      </div>
-
-      <div class="mb-3">
-        <label for="image" class="form-label">Upload Listing Image</label>
-        <input name="listing[image]" type="file" class="form-control" required>
-      </div>
-
-      <div class="row">
-        <div class="mb-3 col-md-4">
-          <label for="price" class="form-label">Enter Price</label>
-          <input name="listing[price]" placeholder="1200" type="number" class="form-control" required>
-          <div class="invalid-feedback">Price should be valid</div>
+    <form method="POST" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input name="listing[title]" placeholder="Add a catchy title" type="text" class="form-control" required>
+            <div class="valid-feedback">Title looks good!</div>
         </div>
-
-        <div class="mb-3 col-md-8">
-          <label for="country" class="form-label">Country</label>
-          <input name="listing[country]" placeholder="India" type="text" class="form-control" required>
-          <div class="invalid-feedback">Country name should be valid</div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="listing[description]" class="form-control" required></textarea>
+            <div class="invalid-feedback">Please enter a short description</div>
         </div>
-      </div>
-
-      <div class="mb-3">
-        <label for="location" class="form-label">Location</label>
-        <input name="listing[location]" placeholder="Jaipur, Rajasthan" type="text" class="form-control" required>
-        <div class="invalid-feedback">Location should be valid</div>
-      </div>
-
-      <div class="mb-3">
-        <label for="category" class="form-label">Type of Airbnb</label>
-        <select name="listing[category]" class="form-select" required>
-          <option value="">Select Type</option>
-          <option value="Trending">Trending</option>
-          <option value="Rooms">Rooms</option>
-          <option value="Iconic Cities">Iconic Cities</option>
-          <option value="Mountains">Mountains</option>
-          <option value="Castles">Castles</option>
-          <option value="Amazing Pools">Amazing Pools</option>
-          <option value="Camping">Camping</option>
-          <option value="Farms">Farms</option>
-          <option value="Arctic">Arctic</option>
-          <option value="Domes">Domes</option>
-          <option value="Boats">Boats</option>
-        </select>
-      </div>
-
-      <br>
-      <button type="submit" class="btn btn-dark">Add Listing</button>
-    </form>
-  </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Upload Listing Image</label>
+            <input name="listing[image]" type="file"  class="form-control" required>
+        </div>
+        <div class="row">
+            <div class="mb-3 col-md-4">
+                <label for="price" class="form-label">Enter Price</label>
+                <input name="listing[price]" placeholder="1200"  class="form-control" required>
+                <div class="invalid-feedback">Price should be valid</div>
+            </div>
+            <div class="mb-3 col-md-8">
+                <label for="country" class="form-label">Country</label>
+            <input name="listing[country]" placeholder="India" type="text"  class="form-control" required>
+            <div class="invalid-feedback">Country name should be valid</div>
+            </div>
+        </div>
+        
+        <div class="mb-3">
+            <label for="location" class="form-label">Location</label>
+            <input name="listing[location]" placeholder="Jaipur,Rajasthan" type="text" class="form-control" required>
+            <div class="invalid-feedback">Location should be valid</div>
+        </div>
+        <!-- Inserted booking button and toggle form -->
+<div class="text-center mt-3">
+  <button class="btn btn-success" id="showBookingBtn">Book This Room</button>
 </div>
+
+<!-- Hidden Booking Form -->
+<div id="bookingForm" class="mt-4 col-6 offset-3" style="display: none;">
+  <form action="/book/<%= listing._id %>" method="POST" class="p-4 border rounded-3 bg-light shadow-sm">
+    <h5 class="mb-3 fw-bold">Booking Details</h5>
+
+    <div class="mb-3">
+      <label class="form-label">Check-In</label>
+      <input type="date" name="checkIn" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Check-Out</label>
+      <input type="date" name="checkOut" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Adults</label>
+      <input type="number" name="adults" class="form-control" min="1" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Children</label>
+      <input type="number" name="children" class="form-control" min="0" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Confirm Booking</button>
+  </form>
+</div>
+
+        <br><br>
+        <button class="btn btn-dark add-btn">Add</button>
+
+    </form>
+</div>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const btn = document.getElementById("showBookingBtn");
+    const form = document.getElementById("bookingForm");
+
+    if (btn && form) {
+      btn.addEventListener("click", function () {
+        if (form.style.display === "none") {
+          form.style.display = "block";
+          btn.innerText = "Hide Booking Form";
+        } else {
+          form.style.display = "none";
+          btn.innerText = "Book This Room";
+        }
+      });
+    }
+  });
+</script>

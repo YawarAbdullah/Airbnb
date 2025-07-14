@@ -1,5 +1,3 @@
-// Edited app.js to fix deployment error
-
 if (process.env.NODE_ENV !== "production") {
     require("dotenv").config();
 }
@@ -83,38 +81,35 @@ app.use((req, res, next) => {
     next();
 });
 
-// 🔍 Log every request
-app.use((req, res, next) => {
-    console.log("🔍 Incoming Request:", req.method, req.path);
-    next();
+app.get("/search", async (req, res) => {
+    const query = req.query.q;
+    const Listing = require("./models/listing");
+    let results = [];
+
+    if (query) {
+        results = await Listing.find({
+            title: { $regex: query, $options: "i" }
+        });
+    }
+
+    res.render("searchResults", { results, query });
 });
 
-// Routes
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
 app.use("/", cartRouter);
 app.use("/", bookingRouter);
 
-// Redirect home to listings
-app.get("/", (req, res) => {
-    res.redirect("/listings");
-});
-
-// Catch-all route for 404
 app.all("*", (req, res, next) => {
     next(new ExpressError(404, "Page Not Found!"));
 });
 
-// ✅ Updated Error Handler
 app.use((err, req, res, next) => {
-    console.error("💥 ERROR STACK:", err?.stack || err);
-    const status = err.statusCode || 500;
-    const message = err.message || "Something Went Wrong!";
-    res.status(status).send(`<h1>ERROR</h1><pre>${message}</pre>`);
+    const { statusCode = 500, message = "Something Went Wrong!" } = err;
+    res.status(statusCode).render("error.ejs", { message });
 });
 
-// Start server
 app.listen(8080, () => {
     console.log("Server is listening");
 });
