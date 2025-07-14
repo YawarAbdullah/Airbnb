@@ -1,24 +1,36 @@
+<% layout("/layouts/boilerplate") %>
 
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold">Your Booked Rooms</h2>
+    <a href="/listings" class="btn btn-outline-primary">← Go Back</a>
+  </div>
 
-<% if (bookings.length === 0) { %>
-  <p>You haven't booked any rooms yet.</p>
-<% } else { %>
- <ul class="list-group">
-  <% bookings.forEach(booking => { %>
-    <li class="list-group-item mb-3">
-      <h5><%= booking.listing.title %></h5>
-      <p>
-        Check-in: <%= booking.checkIn ? booking.checkIn.toDateString() : "N/A" %><br>
-        Check-out: <%= booking.checkOut ? booking.checkOut.toDateString() : "N/A" %><br>
-        Adults: <%= booking.adults %>, Children: <%= booking.children %>
-      </p>
-
-      <!-- Delete Booking Button -->
-      <form action="/book/<%= booking._id %>?_method=DELETE" method="POST">
-        <button class="btn btn-sm btn-outline-danger">Cancel Booking</button>
-      </form>
-    </li>
-  <% }) %>
-</ul>
-
-<% } %>
+  <% if (bookings.length === 0) { %>
+    <div class="alert alert-info">You haven't booked any rooms yet.</div>
+  <% } else { %>
+    <div class="row">
+      <% bookings.forEach(booking => { %>
+        <div class="col-md-6 mb-4">
+          <div class="card shadow-sm border-0">
+            <% if (booking.listing && booking.listing.image) { %>
+              <img src="<%= booking.listing.image.url %>" class="card-img-top" alt="Room image">
+            <% } %>
+            <div class="card-body">
+              <h5 class="card-title"><%= booking.listing.title %></h5>
+              <p class="card-text">
+                📍 <%= booking.listing.location %><br>
+                🏠 Check-in: <%= booking.checkIn ? booking.checkIn.toDateString() : "N/A" %><br>
+                🏁 Check-out: <%= booking.checkOut ? booking.checkOut.toDateString() : "N/A" %><br>
+                👨 Adults: <%= booking.adults %>, 👶 Children: <%= booking.children %>
+              </p>
+              <form action="/book/<%= booking._id %>?_method=DELETE" method="POST">
+                <button class="btn btn-sm btn-danger">Cancel Booking</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+</div>
