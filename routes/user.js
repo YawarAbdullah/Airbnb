@@ -4,6 +4,8 @@ const wrapAsync = require("../utils/wrapAsync");
 const passport = require("passport");
 const { saveRedirectUrl } = require("../middleware.js");
 const userController = require("../controllers/users.js");
+const { isLoggedIn } = require("../middleware");
+
 router.get("/dashboard", isLoggedIn, async (req, res) => {
     const bookings = await Booking.find({ user: req.user._id }).populate("listing");
     res.render("dashboard", { bookings });
