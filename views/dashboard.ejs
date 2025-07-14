@@ -5,12 +5,13 @@
 <% } else { %>
   <ul>
     <% bookings.forEach(booking => { %>
-      <li>
-        <strong><%= booking.listing.title %></strong><br>
-        Check-in: <%= booking.checkIn.toDateString() %><br>
-        Check-out: <%= booking.checkOut.toDateString() %><br>
-        Adults: <%= booking.adults %>, Children: <%= booking.children %>
-      </li>
+    <li>
+  <strong><%= booking.listing?.title || "Unknown Room" %></strong><br>
+  Check-in: <%= booking.checkIn ? booking.checkIn.toDateString() : "N/A" %><br>
+  Check-out: <%= booking.checkOut ? booking.checkOut.toDateString() : "N/A" %><br>
+  Adults: <%= booking.adults || 0 %>, Children: <%= booking.children || 0 %>
+</li>
+
     <% }) %>
   </ul>
 <% } %>
