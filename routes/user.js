@@ -1,4 +1,6 @@
 const express = require("express");
+const Booking = require("../models/booking");
+
 const router = express.Router();
 const wrapAsync = require("../utils/wrapAsync");
 const passport = require("passport");
