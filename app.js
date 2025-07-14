@@ -20,6 +20,9 @@ const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 const cartRouter = require("./routes/cart");
 const bookingRouter = require("./routes/booking");
+const methodOverride = require("method-override");
+
+
 
 const dbUrl = process.env.ATLASDB_URL;
 
