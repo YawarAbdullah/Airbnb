@@ -17,25 +17,37 @@
       <p class="card-text"><%= listing.country %></p>
     </div>
   </div>
- <form action="/book/<%= listing._id %>" method="POST">
-  <div>
-    <label>Check-In:</label>
-    <input type="date" name="checkIn" required>
-  </div>
-  <div>
-    <label>Check-Out:</label>
-    <input type="date" name="checkOut" required>
-  </div>
-  <div>
-    <label>Adults:</label>
-    <input type="number" name="adults" min="1" required>
-  </div>
-  <div>
-    <label>Children:</label>
-    <input type="number" name="children" min="0" required>
-  </div>
-  <button type="submit" class="btn btn-success">Book This Room</button>
-</form>
+<!-- Book Button triggers modal -->
+<!-- Book Button -->
+<button class="btn btn-success" onclick="toggleBookingForm()">Book This Room</button>
+<div id="bookingForm" class="mt-4" style="display: none;">
+  <form action="/book/<%= listing._id %>" method="POST" class="p-4 border rounded-3 bg-light shadow-sm">
+    <h5 class="mb-3 fw-bold">Booking Details</h5>
+
+    <div class="mb-3">
+      <label class="form-label">Check-In</label>
+      <input type="date" name="checkIn" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Check-Out</label>
+      <input type="date" name="checkOut" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Adults</label>
+      <input type="number" name="adults" class="form-control" min="1" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Children</label>
+      <input type="number" name="children" class="form-control" min="0" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Confirm Booking</button>
+  </form>
+</div>
+
 
 
 </div>
