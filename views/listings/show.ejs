@@ -17,10 +17,13 @@
       <p class="card-text"><%= listing.country %></p>
     </div>
   </div>
-<!-- Book Button triggers modal -->
-<!-- Book Button -->
-<button class="btn btn-success" onclick="toggleBookingForm()">Book This Room</button>
-<div id="bookingForm" class="mt-4" style="display: none;">
+<!-- Inserted booking button and toggle form -->
+<div class="text-center mt-3">
+  <button class="btn btn-success" id="showBookingBtn">Book This Room</button>
+</div>
+
+<!-- Hidden Booking Form -->
+<div id="bookingForm" class="mt-4 col-6 offset-3" style="display: none;">
   <form action="/book/<%= listing._id %>" method="POST" class="p-4 border rounded-3 bg-light shadow-sm">
     <h5 class="mb-3 fw-bold">Booking Details</h5>
 
@@ -47,8 +50,6 @@
     <button type="submit" class="btn btn-primary">Confirm Booking</button>
   </form>
 </div>
-
-
 
 </div>
 
@@ -110,3 +111,21 @@
     <% } %>
   </div>
 </div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const btn = document.getElementById("showBookingBtn");
+    const form = document.getElementById("bookingForm");
+
+    if (btn && form) {
+      btn.addEventListener("click", function () {
+        if (form.style.display === "none") {
+          form.style.display = "block";
+          btn.innerText = "Hide Booking Form";
+        } else {
+          form.style.display = "none";
+          btn.innerText = "Book This Room";
+        }
+      });
+    }
+  });
+</script>
