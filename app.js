@@ -1,3 +1,5 @@
+// Edited app.js to fix deployment error
+
 if (process.env.NODE_ENV !== "production") {
     require("dotenv").config();
 }
@@ -106,9 +108,10 @@ app.all("*", (req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-    const { statusCode = 500, message = "Something Went Wrong!" } = err;
-    res.status(statusCode).render("error.ejs", { message });
+    console.error("💥 ERROR:", err.stack);
+    res.status(500).send(`<h1>ERROR</h1><pre>${err.stack}</pre>`);
 });
+
 
 app.listen(8080, () => {
     console.log("Server is listening");
