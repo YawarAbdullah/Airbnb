@@ -29,5 +29,13 @@ router.route("/:id")
 
 //Edit Route
 router.get("/:id/edit", isLoggedIn, isOwner, wrapAsync(listingController.renderEditForm));
+// Show listings by category
+router.get("/category/:type", async (req, res) => {
+  const { type } = req.params;
+  const listings = await Listing.find({ category: type });
+
+  res.render("listings/index", { listings, type });
+});
+
 
 module.exports = router;

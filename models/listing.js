@@ -24,7 +24,12 @@ const listingSchema = new Schema({
   category: {
     type:String,
     enum: ["mountains","arctic","farms","deserts"]
-  }
+  },
+    category: String, // ✅ add this
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
   });
 
   listingSchema.post("findOneAndDelete", async (listing) => {

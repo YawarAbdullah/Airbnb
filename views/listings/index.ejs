@@ -32,6 +32,12 @@
     align-items: center;
   }
 </style>
+<% if (typeof type !== 'undefined') { %>
+  <h2 class="mb-4">Category: <%= type %></h2>
+<% } else { %>
+  <h2 class="mb-4">All Listings</h2>
+<% } %>
+
     <div id="filters">
       <div class="filter">
        <div> <i class="fa-solid fa-fire"></i></div>
