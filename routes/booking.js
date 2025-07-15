@@ -3,7 +3,7 @@ const router = express.Router();
 const Booking = require("../models/booking");
 const { isLoggedIn } = require("../middleware");
 
-// ✅ Book a room
+// Book a room
 router.post("/book/:id", isLoggedIn, async (req, res) => {
   try {
     const { checkIn, checkOut, adults, children } = req.body;
@@ -26,7 +26,7 @@ router.post("/book/:id", isLoggedIn, async (req, res) => {
   }
 });
 
-// ✅ Cancel a booking
+// Cancel a booking
 router.delete("/book/:id", isLoggedIn, async (req, res) => {
   await Booking.findByIdAndDelete(req.params.id);
   req.flash("success", "Booking cancelled.");
