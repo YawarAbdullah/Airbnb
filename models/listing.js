@@ -1,26 +1,25 @@
 const mongoose = require("mongoose");
 
 const listingSchema = new mongoose.Schema({
-  title: String,
-  description: String,
+  title: { type: String, required: true },
+  description: { type: String, required: true },
   image: {
     url: String,
     filename: String,
   },
-  price: Number,
-  location: String,
-  country: String,
+  price: { type: Number, required: true },
+  location: { type: String, required: true },
+  country: { type: String, required: true },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User"
+    ref: "User",
   },
   reviews: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Review"
-    }
-  ]
+      ref: "Review",
+    },
+  ],
 });
 
-const Listing = mongoose.model("Listing", listingSchema);
-module.exports = Listing;
+module.exports = mongoose.model("Listing", listingSchema);
