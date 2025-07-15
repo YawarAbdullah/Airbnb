@@ -23,33 +23,35 @@
   <% } %>
 
   <!-- Hidden Booking Form -->
-  <div id="bookingForm" class="mt-4 col-6 offset-3" style="display: none;">
-    <form action="/book/<%= listing._id %>" method="POST" class="p-4 border rounded-3 bg-light shadow-sm">
-      <h5 class="mb-3 fw-bold">Booking Details</h5>
+  <% if (currUser && !listing.owner._id.equals(currUser._id)) { %>
+    <div id="bookingForm" class="mt-4 col-6 offset-3" style="display: none;">
+      <form action="/book/<%= listing._id %>" method="POST" class="p-4 border rounded-3 bg-light shadow-sm">
+        <h5 class="mb-3 fw-bold">Booking Details</h5>
 
-      <div class="mb-3">
-        <label class="form-label">Check-In</label>
-        <input type="date" name="checkIn" class="form-control" required>
-      </div>
+        <div class="mb-3">
+          <label class="form-label">Check-In</label>
+          <input type="date" name="checkIn" class="form-control" required>
+        </div>
 
-      <div class="mb-3">
-        <label class="form-label">Check-Out</label>
-        <input type="date" name="checkOut" class="form-control" required>
-      </div>
+        <div class="mb-3">
+          <label class="form-label">Check-Out</label>
+          <input type="date" name="checkOut" class="form-control" required>
+        </div>
 
-      <div class="mb-3">
-        <label class="form-label">Adults</label>
-        <input type="number" name="adults" class="form-control" min="1" required>
-      </div>
+        <div class="mb-3">
+          <label class="form-label">Adults</label>
+          <input type="number" name="adults" class="form-control" min="1" required>
+        </div>
 
-      <div class="mb-3">
-        <label class="form-label">Children</label>
-        <input type="number" name="children" class="form-control" min="0" required>
-      </div>
+        <div class="mb-3">
+          <label class="form-label">Children</label>
+          <input type="number" name="children" class="form-control" min="0" required>
+        </div>
 
-      <button type="submit" class="btn btn-primary">Confirm Booking</button>
-    </form>
-  </div>
+        <button type="submit" class="btn btn-primary">Confirm Booking</button>
+      </form>
+    </div>
+  <% } %>
 </div>
 
 <% if (currUser && listing.owner._id.equals(currUser._id)) { %>
