@@ -3,7 +3,7 @@ const Listing = require("../models/listing.js");
 
 module.exports.index = async (req, res) => {
     const listings = await Listing.find({});
-    res.render("listings/index", { listings }); // ✅ This passes 'listings' to the view
+    res.render("listings/index", { listings }); 
 };
 
 module.exports.renderNewForm = (req, res) => {

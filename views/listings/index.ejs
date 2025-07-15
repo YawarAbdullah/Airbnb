@@ -6,35 +6,88 @@
     flex-wrap: wrap;
     align-items: center;
   }
+
   .filter {
     text-align: center;
     margin-right: 2rem;
     margin-top: 2rem;
     opacity: 0.7;
   }
+
   .filter:hover {
     opacity: 1;
     cursor: pointer;
   }
+
   .filter p {
     font-size: 0.8rem;
   }
+
   .tax-info {
     display: none;
+    color: #888;
+    font-weight: 500;
+    font-size: 0.9rem;
   }
+
   .tax-toggle {
-    border: 1px solid black;
-    border-radius: 1rem;
-    height: 3.25rem;
-    padding: 1rem;
-    margin-left: 7rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 2rem;
+    height: auto;
+    padding: 0.8rem 1.5rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2rem;
     display: flex;
     align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    max-width: 400px;
+  }
+
+  .form-switch .form-check-input {
+    width: 50px;
+    height: 25px;
+    background-color: #ccc;
+    border-radius: 25px;
+    position: relative;
+    appearance: none;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s;
+  }
+
+  .form-switch .form-check-input::before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 4px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: white;
+    transition: 0.3s;
+  }
+
+  .form-switch .form-check-input:checked {
+    background-color: #4CAF50;
+  }
+
+  .form-switch .form-check-input:checked::before {
+    transform: translateX(25px);
+  }
+
+  .form-check-label {
+    margin-left: 1rem;
+    font-weight: 500;
+    font-size: 1rem;
+    color: #333;
   }
 </style>
 
-<div class="tax-toggle mt-4">
-  <div class="form-check-reverse form-switch">
+<div class="tax-toggle">
+  <div class="form-check form-switch">
     <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
     <label class="form-check-label" for="switchCheckDefault">Display total after taxes</label>
   </div>
